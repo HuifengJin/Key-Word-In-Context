@@ -39,13 +39,12 @@ class MainTest {
     List<String> titles;
 
     @Test
-    void testSeperate()
+    void testFindKey()
     {
         input.addAll(Arrays.asList(text.split("\\n")));
         ignores.addAll(Arrays.asList(text1.split("\\n")));
         titles.addAll(Arrays.asList(text2.split("\\n")));
-        assertAll(ignores ,Main.seperateIgnore(input));
-        assertAll(titles ,Main.seperateTitle(input));
+        assertEquals(10 ,Main.findKey(ignores, titles).size());
     }
 
 }
