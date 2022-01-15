@@ -3,8 +3,7 @@ import java.util.*;
 public class Main {
 
     public static ArrayList<String> lines = new ArrayList<>();
-    public static List<String> ignores;
-    public static List<String> titles;
+    public static Map<String, ArrayList<String>> Keywords = new HashMap<String, ArrayList<String>>();
 
     public static void readInput()
     {
@@ -28,9 +27,40 @@ public class Main {
         return allLines.subList(i+1, allLines.size());
     }
 
+    public static Map<String, ArrayList<String>> findKey(List<String> ign, List<String> tit)
+    {
+        for (String t: tit) {
+            t = t.toLowerCase();
+            ArrayList<String> words = new ArrayList<>();
+            words.addAll(Arrays.asList(t.split("\\s+")));
+            for(String w: words)
+            {
+                if(!ign.contains(w))
+                {
+                    if(Keywords.containsKey(w))
+                    {
+                        Keywords.get(w).add(t);
+                    }
+                    else
+                    {
+                        Keywords.put(w, new ArrayList<String>(Arrays.asList(t)));
+                    }
+                }
+            }
+        }
+
+        return Keywords;
+    }
+
     public static void main(String[] args) {
+
+        List<String> ignores;
+        List<String> titles;
+
         readInput();
         ignores = seperateIgnore(lines);
         titles = seperateTitle(lines);
+        Keywords = findKey(ignores, titles);
+        System.out.println(Keywords);
     }
 }
