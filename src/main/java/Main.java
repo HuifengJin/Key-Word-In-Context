@@ -38,19 +38,25 @@ public class Main {
             t = t.toLowerCase();
             ArrayList<String> words = new ArrayList<>();
             words.addAll(Arrays.asList(t.split("\\s+")));
+            int count = 0;
             for(String w: words)
             {
+                ArrayList<String> new_words = new ArrayList<>(words);
+                new_words.set(count, w.toUpperCase());
+                String new_t = String.join(" ", new_words);
                 if(!ign.contains(w))
                 {
                     if(Keywords.containsKey(w))
                     {
-                        Keywords.get(w).add(t);
+                        Keywords.get(w).add(new_t);
                     }
                     else
                     {
-                        Keywords.put(w, new ArrayList<String>(Arrays.asList(t)));
+                        Keywords.put(w, new ArrayList<String>(Arrays.asList(new_t)));
                     }
+                    w = w.toLowerCase();
                 }
+                count++;
             }
         }
 
@@ -60,6 +66,15 @@ public class Main {
     public static Map<String, ArrayList<String>> sortKey(Map<String, ArrayList<String>> KeyMap)
     {
         return new TreeMap<String, ArrayList<String>>(KeyMap);
+    }
+
+    public static void printResult(Map<String, ArrayList<String>> KeyMap)
+    {
+        for (String key : KeyMap.keySet()) {
+            for (String title: KeyMap.get(key)) {
+                System.out.println(title);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -72,5 +87,6 @@ public class Main {
         titles = seperateTitle(lines);
         Keywords = findKey(ignores, titles);
         Keywords = sortKey(Keywords);
+        printResult(Keywords);
     }
 }
