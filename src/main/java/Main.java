@@ -1,4 +1,9 @@
 import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class Main {
 
@@ -52,6 +57,11 @@ public class Main {
         return Keywords;
     }
 
+    public static Map<String, ArrayList<String>> sortKey(Map<String, ArrayList<String>> KeyMap)
+    {
+        return new TreeMap<String, ArrayList<String>>(KeyMap);
+    }
+
     public static void main(String[] args) {
 
         List<String> ignores;
@@ -61,6 +71,6 @@ public class Main {
         ignores = seperateIgnore(lines);
         titles = seperateTitle(lines);
         Keywords = findKey(ignores, titles);
-        System.out.println(Keywords);
+        Keywords = sortKey(Keywords);
     }
 }
