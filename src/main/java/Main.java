@@ -54,7 +54,6 @@ public class Main {
                     {
                         Keywords.put(w, new ArrayList<String>(Arrays.asList(new_t)));
                     }
-                    w = w.toLowerCase();
                 }
                 count++;
             }
@@ -68,13 +67,16 @@ public class Main {
         return new TreeMap<String, ArrayList<String>>(KeyMap);
     }
 
-    public static void printResult(Map<String, ArrayList<String>> KeyMap)
+    public static String printResult(Map<String, ArrayList<String>> KeyMap)
     {
+        String r = "";
         for (String key : KeyMap.keySet()) {
             for (String title: KeyMap.get(key)) {
-                System.out.println(title);
+                //System.out.println(title);
+                r += title + "\n";
             }
         }
+        return r;
     }
 
     public static void main(String[] args) {
@@ -87,6 +89,6 @@ public class Main {
         titles = seperateTitle(lines);
         Keywords = findKey(ignores, titles);
         Keywords = sortKey(Keywords);
-        printResult(Keywords);
+        System.out.println(printResult(Keywords));
     }
 }
